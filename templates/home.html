@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Welcome to the HomePage! {{ name }}</h1>
+    <h2>Your gender is {{ gender }}</h2>
+    <h3>List</h3>
+     {% for i in frnd %}
+       <p> {{i}}</p>
+    {% endfor %}
+    <H1>SUSHANT</H1>
+    <form action="/submit" method="POST">
+        <input type="text" name="name" placeholder="Enter your name">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
