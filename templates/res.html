@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <title>Extracted PDF Text</title>
+</head>
+<body>
+    <h1>Extracted Text from PDF</h1>
+    <!-- Display the extracted text -->
+    <!-- <pre>{{ text }}</pre> -->
+
+    <h1>Provide Email Information</h1>
+    <br>
+    <h2>The Domain has hosted in the Date : {{startDate}}</h2>
+    <br>
+    <h2>MX record info is :{{mx_record_info}}</h2>
+    <a href="/">Upload Another PDF</a>
+
+    <h2>Pie Chart</h2>
+
+    <canvas id="pieChart" width="500" height="=500" style="display: none;"></canvas>
+
+
+    <script>
+            const correctPercentage = {{ correct_percentage | tojson }};
+            const mistakePercentage ={{ mistake_percentage | tojson }};
+        const ctx = document.getElementById('pieChart').getContext('2d');
+    
+            const chart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Correct Grammar', 'Grammar Mistakes'],
+                    datasets: [{
+                        label: 'Grammar Analysis',
+                        data: [ correctPercentage , mistakePercentage ],
+                        backgroundColor: ['#66b3ff', '#ff6666'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Grammar Mistakes vs Correct Grammar'
+                        }
+                    }
+                }
+            });
+
+            // Display the chart
+            document.getElementById('pieChart').style.display = 'block';
+    </script>
+</body>
+</html>
