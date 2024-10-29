@@ -1,0 +1,105 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Header Styles */
+h1 {
+    color: #1a73e8;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+/* Main Content Styling */
+pre {
+    background-color: #f0f4f8;
+    padding: 15px;
+    border-radius: 5px;
+    color: #444;
+    font-size: 1rem;
+    margin-top: 10px;
+    overflow-x: auto;
+    max-height: 400px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+p {
+    font-size: 1rem;
+    margin: 10px 0;
+    color: #555;
+}
+
+/* Button Link Styling */
+a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #1a73e8;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+}
+
+a:hover {
+    background-color: #0d5bbf;
+}
+
+/* Chart Section Styling */
+canvas {
+    display: block;
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+h2, pre, p, a {
+    text-align: center;
+}
+
+/* Grammar Analysis Styles */
+#pieChart {
+    margin-top: 20px;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.chart-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+    h1, h2 {
+        font-size: 1.5rem;
+    }
+
+    pre {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    a {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+}
