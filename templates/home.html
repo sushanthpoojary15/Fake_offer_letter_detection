@@ -3,19 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Upload PDF</title>
 </head>
 <body>
-    <h1>Welcome to the HomePage! {{ name }}</h1>
-    <h2>Your gender is {{ gender }}</h2>
-    <h3>List</h3>
-     {% for i in frnd %}
-       <p> {{i}}</p>
-    {% endfor %}
-    <H1>SUSHANT</H1>
-    <form action="/submit" method="POST">
-        <input type="text" name="name" placeholder="Enter your name">
-        <button type="submit">Submit</button>
-    </form>
+    <h1>Upload a PDF File sfdsfdsf</h1>
+    <!-- The form to upload a file -->
+    <div class="container form-container">
+        <h3 class="mb-4">Job Offer Validation Form</h3>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+    
+            <!-- Input field for file upload -->
+            <div class="mb-3">
+                <label for="file" class="form-label">Upload Offer Letter (PDF):</label>
+                <input type="file" class="form-control" name="file" accept="application/pdf" required>
+            </div>
+    
+            <!-- Email ID -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Registered Email ID:</label>
+                <input type="email" class="form-control" name="email" required>
+            </div>
+    
+            <!-- Interview Format -->
+            <div class="mb-3">
+                <label for="interview_format" class="form-label">Interview Format:</label>
+                <select class="form-select" name="interview_format" id="interview_format" onchange="toggleOtherField('interview_format', 'other_interview_format')">
+                    <option value="In-Person">In-Person</option>
+                    <option value="Video Call">Video Call</option>
+                    <option value="Phone Call">Phone Call</option>
+                    <option value="Online Assessment">Online Assessment</option>
+                </select>
+                
+            </div>
+    
+            <!-- Rounds -->
+            <div class="mb-3">
+                <label for="rounds" class="form-label">Number of Interview Rounds:</label>
+                <input type="number" class="form-control" name="rounds"  required min="1" value="1">
+            </div>
+    
+            <!-- Duration -->
+            <div class="mb-3">
+                <label for="duration" class="form-label">Interview Duration (mins):</label>
+                <select class="form-select" name="duration" id="duration" onchange="toggleOtherField('duration', 'other_duration')">
+                    <option value="15">10-20 mins</option>
+                    <option value="30">20-40 mins</option>
+                    <option value="45">40-60 mins</option>
+                    <option value="Other">Other</option>
+                </select>
+                <input type="number" class="form-control mt-2" id="other_duration" name="other_duration" placeholder="Specify other duration (in mins)" style="display:none;">
+            </div>
+    
+            <!-- Difficulty Level -->
+            <div class="mb-3">
+                <label for="difficulty_level" class="form-label">Difficulty Level:</label>
+                <select class="form-select" name="difficulty_level" id="difficulty_level" onchange="toggleOtherField('difficulty_level', 'other_difficulty_level')">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                  
+                </select>
+            </div>
+    
+            <!-- Money Requested -->
+            <div class="mb-3">
+                <label for="money_requested" class="form-label">Was Money Requested?</label>
+                <select class="form-select" name="money_requested">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+    
+            <!-- Paid Course -->
+            <div class="mb-3">
+                <label for="paid_course" class="form-label">Was a Paid Course Required?</label>
+                <select class="form-select" name="paid_course">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+    
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+    
+
+ 
 </body>
 </html>
+<script>
+    function toggleOtherField(selectId, otherFieldId) {
+    const selectElement = document.getElementById(selectId);
+    const otherField = document.getElementById(otherFieldId);
+    otherField.style.display = selectElement.value === 'Other' ? 'inline' : 'none';
+}
+</script>
+
