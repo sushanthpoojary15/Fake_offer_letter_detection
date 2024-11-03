@@ -79,7 +79,22 @@ def upload_file():
     genuine_Accuracy=Predic_offerltr_genuiness(form_data)
     
 #
-    return render_template('res.html', text=pdf_text, startDate=startDate, mx_record_info=mx_record_info,correct_percentage=correct_percentage,mistake_percentage=mistake_percentage,genuine_Accuracy=genuine_Accuracy)
+    return render_template(
+    'res.html',
+    text=pdf_text,
+    startDate=startDate,
+    mx_record_info=mx_record_info,
+    correct_percentage=correct_percentage,
+    mistake_percentage=mistake_percentage,
+    genuine_Accuracy=genuine_Accuracy,
+    email=email,
+    interview_format=interview_format,
+    rounds=rounds,
+    duration=duration,
+    difficulty_level=difficulty_level,
+    money_requested=money_requested,
+    paid_course=paid_course
+)
 
 def extract_text_from_pdf(pdf_content):
     pdf_stream = io.BytesIO(pdf_content)
