@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/templates/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <title>Fake Offer Letter Detection</title>
@@ -12,7 +13,7 @@
             background-color: #f8f9fa;
             margin: 0;
             padding: 20px;
-            background-image: url('/images/bg_image.jpg');
+            background-image: url('/static/bg_image.jpg');
             background-size: cover; /* Ensures the image covers the entire background */
             background-position: center; /* Centers the background image */
         }
@@ -30,13 +31,51 @@
             background-color: #007bff;
             border: none;
         }
+
+
+
+        .animate-charcter
+{
+   text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #231557 0%,
+    #44107a 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size: 50px;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+
+        
     </style>
 </head>
 <body>
-    <h1>Fake Offer Letter Detection</h1>
+    <div class="col-md-12 text-center">
+        <h3 class="animate-charcter"> Fake Offer Letter Detection</h3>
+      </div>
+      
+    <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"></h1>
     <!-- The form to upload a file -->
     <div class="container form-container">
-        <h3 class="mb-4">Job Offer Validation Form</h3>
+       <h3 class="mb-4" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Job Offer Validation Form</h3>
         <form action="/upload" method="post" enctype="multipart/form-data">
     
             <!-- Input field for file upload -->

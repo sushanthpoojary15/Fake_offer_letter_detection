@@ -21,14 +21,14 @@ import pandas as pd
 
 from joblib import dump
 # Initialize LanguageTool for grammar checking
-tool = language_tool_python.LanguageTool('en-US')
+#tool = language_tool_python.LanguageTool('en-US')
 
-corrector = pipeline("text2text-generation", model="facebook/bart-large")
-
-
+#corrector = pipeline("text2text-generation", model="facebook/bart-large")
 
 
-app = Flask(__name__)
+
+
+app = Flask(__name__,static_folder='static')
 
 @app.route("/")
 def home():
@@ -59,8 +59,9 @@ def upload_file():
     }
 
     # Basic email format validation
+    email_valid=True
     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-        return redirect(request.url)
+        email_valid=False
 
     domain = email.split('@')[1]
     startDate = check_domain_start_date(domain)
@@ -93,10 +94,12 @@ def upload_file():
     duration=duration,
     difficulty_level=difficulty_level,
     money_requested=money_requested,
-    paid_course=paid_course
+    paid_course=paid_course,
+    email_valid=email_valid
 )
 
 def extract_text_from_pdf(pdf_content):
+    print("extrct text process going on ...")
     pdf_stream = io.BytesIO(pdf_content)
     reader = PdfReader(pdf_stream)
     text = ''
@@ -105,6 +108,7 @@ def extract_text_from_pdf(pdf_content):
     return text
 
 def check_domain_start_date(domain):
+    print("check domain strt date process going on ...")
     try:
         w = whois.whois(domain)
         return w.creation_date
@@ -112,6 +116,7 @@ def check_domain_start_date(domain):
         return 'No Record present'
 
 def check_mx_records(domain):
+    print("check domain mx record process going on ...")
     try:
         mx_records = dns.resolver.resolve(domain, 'MX')
         mx_hosts = [str(r.exchange) for r in mx_records]
@@ -137,19 +142,30 @@ def check_mx_records(domain):
 
 class SpellCheckerModule:
     def __init__(self):
-        self.spell_check = TextBlob("")
-        self.grammar_check = language_tool_python.LanguageTool('en-US')
+        self.spell_cache = {}
+        self.grammar_check = None  # Initialize only when needed
+
+    def _initialize_grammar_check(self):
+        if not self.grammar_check:
+            self.grammar_check = language_tool_python.LanguageTool('en-US')
 
     def correct_spell(self, text):
         words = text.split()
-        corrected_words = [str(TextBlob(word).correct()) for word in words]
+        corrected_words = [
+            self.spell_cache.get(word, str(TextBlob(word).correct()))
+            for word in words
+        ]
+        # Update cache with new corrections
+        self.spell_cache.update({word: corrected for word, corrected in zip(words, corrected_words)})
         return " ".join(corrected_words)
 
     def correct_grammar(self, text):
+        self._initialize_grammar_check()
         matches = self.grammar_check.check(text)
         return len(matches)
 
     def get_percentages(self, text):
+        print("Processing grammar mistake percentage...")
         corrected_text = self.correct_spell(text)
         mistake_count = self.correct_grammar(corrected_text)
         total_words = len(corrected_text.split())
@@ -161,7 +177,7 @@ class SpellCheckerModule:
 
 
 def Predic_offerltr_genuiness(formData):
-    print(formData)
+    print("predict offer letter genuiness process going on ...")
     interview_format = formData["interview_format"]
     rounds = formData["rounds"]
     duration = formData["duration"]
