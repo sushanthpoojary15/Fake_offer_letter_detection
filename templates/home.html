@@ -80,6 +80,17 @@
     
             <!-- Input field for file upload -->
             <div class="mb-3">
+                <label for="interview_format" class="form-label">Choose Model:</label>
+                <select class="form-select" name="model_type" id="modeltype">
+                    <option value="Random Forest">Random Forest</option>
+                    <option value="Decision Tree">Decsion Tree</option>
+                    <option value="Neural Network">Neural Network</option>
+                </select>
+                
+            </div>
+
+
+            <div class="mb-3">
                 <label for="file" class="form-label">Upload Offer Letter (PDF):</label>
                 <input type="file" class="form-control" name="file" accept="application/pdf" required>
             </div>

@@ -3,6 +3,8 @@ import io
 from PyPDF2 import PdfReader
 
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report, confusion_matrix,accuracy_score
 from sklearn.model_selection import train_test_split
 
@@ -48,6 +50,7 @@ def upload_file():
     difficulty_level = request.form.get('difficulty_level')
     money_requested = request.form.get('money_requested')
     paid_course = request.form.get('paid_course')
+    model_type=request.form.get('model_type')
 
     form_data = {
     "interview_format": interview_format,
@@ -77,7 +80,7 @@ def upload_file():
     spell_checker = SpellCheckerModule()
     correct_percentage, mistake_percentage = spell_checker.get_percentages(pdf_text)
     
-    genuine_Accuracy=Predic_offerltr_genuiness(form_data)
+    genuine_Accuracy=Predic_offerltr_genuiness(form_data,model_type)
     
 #
     return render_template(
@@ -176,7 +179,7 @@ class SpellCheckerModule:
 #END MELVING SECTION ############################################
 
 
-def Predic_offerltr_genuiness(formData):
+def Predic_offerltr_genuiness(formData,type):
     print("predict offer letter genuiness process going on ...")
     interview_format = formData["interview_format"]
     rounds = formData["rounds"]
@@ -222,8 +225,12 @@ def Predic_offerltr_genuiness(formData):
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
 
-    # Initialize the model
-    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    if type=="Random Forest":
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+    elif type=="Decision Tree":
+        model=DecisionTreeClassifier(random_state=42)
+    else:
+        model=MLPClassifier(hidden_layer_sizes=(100,), max_iter=500, random_state=42)
 
     # Train the model
     model.fit(X_train, y_train)
