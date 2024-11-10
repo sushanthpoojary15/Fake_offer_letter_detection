@@ -18,6 +18,7 @@ import nltk,re
 from textblob import TextBlob
 import os
 from joblib import load
+from datetime import datetime
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
 
@@ -79,8 +80,8 @@ def upload_file():
     # Call the spell and grammar check
     spell_checker = SpellCheckerModule()
     correct_percentage, mistake_percentage = spell_checker.get_percentages(pdf_text)
-    
-    genuine_Accuracy=Predic_offerltr_genuiness(form_data,model_type)
+    genuine_Accuracy,model_accuracy=Predic_offerltr_genuiness(form_data,model_type)
+    model_accuracy=model_accuracy*100
     
 #
     return render_template(
@@ -98,7 +99,9 @@ def upload_file():
     difficulty_level=difficulty_level,
     money_requested=money_requested,
     paid_course=paid_course,
-    email_valid=email_valid
+    email_valid=email_valid,
+    model_accuracy=model_accuracy,
+    model_name=model_type
 )
 
 def extract_text_from_pdf(pdf_content):
@@ -111,11 +114,19 @@ def extract_text_from_pdf(pdf_content):
     return text
 
 def check_domain_start_date(domain):
-    print("check domain strt date process going on ...")
+    print("Checking domain start date...")
     try:
         w = whois.whois(domain)
-        return w.creation_date
-    except Exception:
+        creation_date = w.creation_date
+        if isinstance(creation_date, list):
+            formatted_dates = [dt.strftime("%Y-%m-%d %H:%M:%S %Z") for dt in creation_date if isinstance(dt, datetime)]
+            return formatted_dates if formatted_dates else 'No Record present'
+        elif isinstance(creation_date, datetime):
+            return creation_date.strftime("%Y-%m-%d %H:%M:%S %Z")
+        else:
+            return 'No Record present'
+    except Exception as e:
+        print("Error:", e)
         return 'No Record present'
 
 def check_mx_records(domain):
@@ -204,8 +215,7 @@ def Predic_offerltr_genuiness(formData,type):
         'Paid Course': [paid_course]
     })
 
-    data = pd.read_csv("fake_job.csv")
-
+    data = pd.read_csv("Fake_job_final.csv")
     # Preprocessing
     # Convert categorical columns to numerical
     data['Interview Format'] = data['Interview Format'].apply(lambda x: 1 if x == 'In-Person' else 0)
@@ -254,7 +264,7 @@ def Predic_offerltr_genuiness(formData,type):
 
     # Save the model for future use
     dump(model, 'job_offer_genuineness_model.joblib')
-    return user_prediction
+    return user_prediction,accuracy
 
 if __name__ == '__main__':
     app.run(debug=True) 

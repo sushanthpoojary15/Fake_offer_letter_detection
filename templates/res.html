@@ -101,6 +101,11 @@
                 <p class="highlight">{{ genuine_Accuracy }}%</p>
             </div>
             <div class="section">
+                <h2>Model Information</h2>
+                <p><strong>Model Used:</strong> <span class="highlight">{{ model_name }}</span></p>
+                <p><strong>Model Accuracy:</strong> <span class="highlight">{{ model_accuracy }}%</span></p>
+            </div>
+            <div class="section">
                 <h2>Email Validation Results</h2>
                 <p><strong>Email Address:</strong> {{ email }}</p>
                 <p><strong>Email Format Validity:</strong> {% if email_valid %}Valid{% else %}Invalid{% endif %}</p>
